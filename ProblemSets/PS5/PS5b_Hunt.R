@@ -5,7 +5,7 @@ library(xml2)
 library(jsonlite)
 
 #You must enter your own API key from holidayapi.com
-api_key <- "d1c60533-d7c8-4320-8752-9b88ee0ea119"
+api_key <- "API KEY"
 url <- "https://holidayapi.com/v1/holidays"
 
 # Set query parameters (adjust as necessary)
