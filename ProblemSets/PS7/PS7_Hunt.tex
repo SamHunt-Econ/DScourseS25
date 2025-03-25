@@ -1,0 +1,89 @@
+\documentclass{article}
+\usepackage{tabularray}
+\usepackage{graphicx}  % To include the images (histograms)
+\usepackage[margin=0.7in]{geometry}  % Adjust the page margins
+
+\title{Problem Set 7}
+\author{Samuel Hunt}
+\date{March 25, 2025}
+
+\begin{document}
+
+\maketitle  % This will print the title
+
+\section{Imputation Methods}
+From our summary statistics table, we can see that log wages are missing at a rate of 25 percent. Additionally, because we can assume that this wages dataset is some form of survey data, we can assume the worst that the data is MNAR. It is possible that there is an attenuation bias in log wages, such as those with no wages reporting their value as NA, or people being embarrassed to report their log wages. This means that there could be an omitted variable explaining systemic differences in the true value of the omitted log wage variables, meaning the data would be MNAR.
+\\
+\\Across the four different models, we see relatively similar coefficients for $\beta_1$. The first and third imputation method result in the same value of 0.062. Additionally, the multiple imputation method is very similar at a value of 0.059. The mean imputation method is the most different at 0.05. Although these values are relatively similar to each other, they are all quite different from the true value of $\beta_1$ which is 0.093. This tells us that MCAR and MAR are both unlikely to be accurate fits for our data, as neither model 1 or model 3 resulted in an accurate estimate of the coefficient. Mean imputation is generally unreliable, and that also held true in our test as it has the least accurate coefficient estimate. Finally, it looks like the multiple imputation model was also unable to be accurate as our data must be MNAR. This shows that imputation won't always be accurate when a attenuation bias occurs in the missing values of our data.
+
+
+\begin{table}
+\centering
+\caption{Summary Statistics}  % Title added
+\begin{tblr}[         %% tabularray outer open
+]                     %% tabularray outer close
+{                     %% tabularray inner open
+colspec={Q[]Q[]Q[]Q[]Q[]Q[]Q[]Q[]},
+hline{6}={1,2,3,4,5,6,7,8}{solid, black, 0.1em},
+}                     %% tabularray inner close
+\toprule
+& Unique & Missing Pct. & Mean & SD & Min & Median & Max \\ \midrule %% TinyTableHeader
+logwage & 670 & 25 & 1.6 & 0.4 & 0.0 & 1.7 & 2.3 \\
+hgc & 16 & 0 & 13.1 & 2.5 & 0.0 & 12.0 & 18.0 \\
+tenure & 259 & 0 & 6.0 & 5.5 & 0.0 & 3.8 & 25.9 \\
+age & 13 & 0 & 39.2 & 3.1 & 34.0 & 39.0 & 46.0 \\
+&  & N & \% &  &  &  &  \\
+college & college grad & 530 & 23.8 &  &  &  &  \\
+& not college grad & 1699 & 76.2 &  &  &  &  \\
+married & married & 1431 & 64.2 &  &  &  &  \\
+& single & 798 & 35.8 &  &  &  &  \\
+\bottomrule
+\end{tblr}
+\end{table}
+
+
+\begin{table}[ht]
+\centering
+\caption{Regression Outputs}  % Table caption outside talltblr
+\resizebox{\textwidth}{!}{ %% Scale the table to fit within text width
+\begin{talltblr}[         %% tabularray outer open
+]                     %% tabularray outer close
+{                     %% tabularray inner open
+colspec={Q[]Q[]Q[]Q[]Q[]},
+column{2,3,4,5}={}{halign=c,},
+column{1}={}{halign=l,},
+hline{16}={1,2,3,4,5}{solid, black, 0.05em},
+}                     %% tabularray inner close
+\toprule
+& Listwise Deletion & Mean Imputation & Predicted Imputation & Multiple Imputation \\ \midrule %% TinyTableHeader
+(Intercept) & \num{0.534} & \num{0.708} & \num{0.534} & \num{0.656} \\
+& (\num{0.146}) & (\num{0.116}) & (\num{0.112}) & (\num{0.161}) \\
+hgc & \num{0.062} & \num{0.050} & \num{0.062} & \num{0.059} \\
+& (\num{0.005}) & (\num{0.004}) & (\num{0.004}) & (\num{0.006}) \\
+collegenot college grad & \num{0.145} & \num{0.168} & \num{0.145} & \num{0.113} \\
+& (\num{0.034}) & (\num{0.026}) & (\num{0.025}) & (\num{0.031}) \\
+tenure & \num{0.050} & \num{0.038} & \num{0.050} & \num{0.042} \\
+& (\num{0.005}) & (\num{0.004}) & (\num{0.004}) & (\num{0.005}) \\
+I(tenure\textasciicircum{}2) & \num{-0.002} & \num{-0.001} & \num{-0.002} & \num{-0.001} \\
+& (\num{0.000}) & (\num{0.000}) & (\num{0.000}) & (\num{0.000}) \\
+age & \num{0.000} & \num{0.000} & \num{0.000} & \num{-0.000} \\
+& (\num{0.003}) & (\num{0.002}) & (\num{0.002}) & (\num{0.003}) \\
+marriedsingle & \num{-0.022} & \num{-0.027} & \num{-0.022} & \num{-0.015} \\
+& (\num{0.018}) & (\num{0.014}) & (\num{0.013}) & (\num{0.016}) \\
+Num.Obs. & \num{1669} & \num{2229} & \num{2229} &  \\
+R2 & \num{0.208} & \num{0.147} & \num{0.277} &  \\
+R2 Adj. & \num{0.206} & \num{0.145} & \num{0.0.275} &  \\
+AIC & \num{1179.9} & \num{1091.2} & \num{925.5} &  \\
+BIC & \num{1223.2} & \num{1136.8} & \num{971.1} &  \\
+Log.Lik. & \num{-581.936} & \num{-537.580} & \num{-454.737} &  \\
+RMSE & \num{0.34} & \num{0.31} & \num{0.30} &  \\
+\bottomrule
+\end{talltblr}
+} %% End resizebox
+\end{table}
+
+\section{Project Update}
+My project for this class has been going well and I believe that I am making smooth progress. It is a research paper that I am doing for my honors thesis that looks at the impact of NAFTA on various mortality statistics in the United States. To make that paper my project for this class as well, I am hoping to create a fully replicable package of scripts that will be able to produce the models and images that are used in my paper. I have already started working with import and export data to create a NAFTA vulnerability metric for each county in the US, working off of a framework of an existing paper. For the models I plan to use, I know that I will end up utilizing an event-study model. There exists a general formula for this model that I will be able to add my chosen dependent variables of mortality statistics to, and this will show me the importance of NAFTA vulnerability for each mortality statistic before and after NAFTA was enacted. 
+
+
+\end{document}
