@@ -1,0 +1,82 @@
+\documentclass{article}
+\usepackage{tabularray}
+\usepackage{graphicx}  % To include the images (histograms)
+\usepackage[margin=0.7in]{geometry}  % Adjust the page margins
+
+\title{Problem Set 8}
+\author{Samuel Hunt}
+\date{April 1, 2025}
+
+\begin{document}
+
+\maketitle  % This will print the title
+
+\section{Optimization}
+The first method used to calculate $\hat{\beta}_{OLS}$ is directly through the closed-form solution using matrix algebra. This resulted in the estimation. 
+\\$\hat{\beta}_{OLS} = <1.5010518, -1.0008296, -0.2516480, 0.7490406, 3.5005531, -2.0008185, 0.4987148, 1.0028269, 1.2465102, 2.0010012>
+$
+\\This is very close to our true value of $\beta$ that we initialized.
+\\
+\\The second method used to compute $\hat{\beta}_{OLS}$ was through stochastic gradient descent. I used just 100 iterations in order to minimize computing wait, and received the following estimate.
+\\$\hat{\beta}_{OLS} = <1.501047, -1.000827, -0.25164, 0.7490496, 3.500546, -2.000812, 0.4987227, 1.002818, 1.246518, 2.000995>
+$
+\\This estimation is also very close to the true value of $\beta$.
+\\
+\\We then use the L-BFGS and Nelder-Mead algorithms in the nloptr package to get two more estimates of $\hat{\beta}_{OLS}$. They are as follows. L-BFGS:
+\\$\hat{\beta}_{OLS} = <1.501052, -1.00083, -0.251648, 0.7490406, 3.500553, -2.000819, 0.4987148, 1.002827, 1.24651, 2.001001>
+$
+\\Nelder-Mead:
+\\$\hat{\beta}_{OLS} = <1.548954, -1.006625, -0.2769109, 0.8007047, 3.480996, -2.01373, 0.6182838, 0.9483756, 1.209894, 1.885284>
+$
+\\Our estimates between these two algorithms do differ, and we can see that L-BFGS is far more accurate than the Nelder-mead algorithm for our data.
+\\
+\\We will now estimate $\hat{\beta}_{MLE}$ using the same nloptr L-BFGS algorithm.
+\\$\hat{\beta}_{MLE} = <1.5010518, -1.0008296, -0.2516480,  0.7490406,  3.5005531, -2.0008185,  0.4987148, 1.0028268,  1.2465102,  2.0010012>$
+\\
+\\Finally, we estimate $\hat{\beta}_{OLS}$ using simple regression. The output for the model summary of this regression is included below. From the table we can see that there is very little variance between the estimated values and the "ground truth" of $\beta$. Most estimates are within $0.003$ of the actual value.
+
+\begin{table}
+\centering
+\begin{tblr}[         %% tabularray outer open
+]                     %% tabularray outer close
+{                     %% tabularray inner open
+colspec={Q[]Q[]},
+column{2}={}{halign=c,},
+column{1}={}{halign=l,},
+hline{22}={1,2}{solid, black, 0.05em},
+}                     %% tabularray inner close
+\toprule
+& (1) \\ \midrule %% TinyTableHeader
+X1 & \num{1.501} \\
+& (\num{0.002}) \\
+X2 & \num{-1.001} \\
+& (\num{0.002}) \\
+X3 & \num{-0.252} \\
+& (\num{0.002}) \\
+X4 & \num{0.749} \\
+& (\num{0.002}) \\
+X5 & \num{3.501} \\
+& (\num{0.002}) \\
+X6 & \num{-2.001} \\
+& (\num{0.002}) \\
+X7 & \num{0.499} \\
+& (\num{0.002}) \\
+X8 & \num{1.003} \\
+& (\num{0.002}) \\
+X9 & \num{1.247} \\
+& (\num{0.002}) \\
+X10 & \num{2.001} \\
+& (\num{0.002}) \\
+Num.Obs. & \num{100000} \\
+R2 & \num{0.991} \\
+R2 Adj. & \num{0.991} \\
+AIC & \num{145143.6} \\
+BIC & \num{145248.3} \\
+Log.Lik. & \num{-72560.811} \\
+RMSE & \num{0.50} \\
+\bottomrule
+\end{tblr}
+\end{table} 
+
+
+\end{document}
