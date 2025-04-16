@@ -1,0 +1,35 @@
+\documentclass{article}
+\usepackage{tabularray}
+\usepackage{graphicx}  % To include the images (histograms)
+\usepackage[margin=0.7in]{geometry}  % Adjust the page margins
+
+\title{Problem Set 10}
+\author{Samuel Hunt}
+\date{April 15, 2025}
+
+\begin{document}
+
+\maketitle  % This will print the title
+
+\section{Classification Models using the Machine Learning Tribes}
+For this problem set we attempted to classify each person in UC Irvine's Income dataset as high-income or not based on a variety of other variables. We used 4 of the 5 machine learning tribes and 5 total models. The first model was the Logit model. We first found an optimal parameter of 1e-10, and then an out-of-sample accuracy of .8526. The next model was a tree model, and we found optimal parameter values of 0.001 for cost complexity, 15 for tree depth, and 10 for minimum split sample size. This model had an out-of-sample accuracy of 0.8684. Third, we used a neural net model and tuned to get optimal parameter values of 1 for the penalty and 4 for the number of hidden units. This resulted in an accuracy of 0.8567. Finally, under the analogizers branch, we ran a kNN and SVM model. The kNN model had optimal parameters of 30 neighbors and an accuracy of 0.8434. The SVM model had optimal parameters of $2^0$ for the cost, $2^-2$ for the rbf sigma, and an accuracy of 0.8640. All of these results are contained in the table below. Overall, the tree model had the highest accuracy although each of the models was fairly similar at around 85 percent accuracy.
+
+\begin{table}
+\centering
+\begin{tblr}[         %% tabularray outer open
+]                     %% tabularray outer close
+{                     %% tabularray inner open
+colspec={Q[]Q[]Q[]Q[]Q[]Q[]Q[]Q[]Q[]Q[]},
+column{1,2,3,4,5,6,7,8,9,10}={}{halign=l,},
+}                     %% tabularray inner close
+\toprule
+penalty & .estimate & alg & cost\_complexity & tree\_depth & min\_n & hidden\_units & neighbors & cost & rbf\_sigma \\ \midrule %% TinyTableHeader
+\num{0.0000} & \num{0.8526} & logit &  &  &  &  &  &  &  \\
+& \num{0.8684} & tree & \num{0.0010} & \num{15.0000} & \num{10.0000} &  &  &  &  \\
+\num{1.0000} & \num{0.8567} & nnet &  &  &  & \num{4.0000} &  &  &  \\
+& \num{0.8434} & knn &  &  &  &  & \num{30.0000} &  &  \\
+& \num{0.8640} & svm &  &  &  &  &  & \num{1.0000} & \num{0.2500} \\
+\bottomrule
+\end{tblr}
+\end{table} 
+\end{document}
